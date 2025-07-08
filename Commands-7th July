@@ -27,3 +27,7 @@ eksctl create cluster --name murali-test-cluster \
   --nodes-min 2 \
   --nodes-max 5 \
   --managed 
+
+To Create a Cluster using the YAMl File use this command : 
+
+eksctl create cluster -f eks-cluster.yaml
