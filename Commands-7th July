@@ -31,3 +31,7 @@ eksctl create cluster --name murali-test-cluster \
 To Create a Cluster using the YAMl File use this command : 
 
 eksctl create cluster -f eks-cluster.yaml
+
+aws eks update-kubeconfig --name murali-test-cluster --region us-west-2
+
+kubectl get nodes 
