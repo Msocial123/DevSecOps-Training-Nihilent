@@ -15,7 +15,7 @@ nodeGroups:
     amiFamily: AmazonLinux2
     ssh:
       allow: true
-      publicKeyName: your-keypair-name  # Replace with actual EC2 key pair name
+      publicKeyName: your-keypair-name  # 🔁 Replace with your actual EC2 key pair name
     tags:
       nodegroup-type: standard-workers
       environment: dev
