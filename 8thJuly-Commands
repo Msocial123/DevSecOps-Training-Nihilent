@@ -1,0 +1,17 @@
+22  aws eks update-kubeconfig --name murali-test-devsecops --region ap-south-1
+   23  kubectl get pods
+   24  kubectl get deployments
+   25  clear
+   26  git clone https://github.com/Msocial123/microservices-demo.git
+   27  ls
+   28  cd microservices-demo/
+   29  clar
+   30  clear
+   31  kubectl apply -f ./release/kubernetes-manifests.yaml
+   32  kubectl get pods
+   33  kunectl get deployments
+   34  kubectl get deployments
+   35  kubectl get rs
+   36  kubectl get pods
+   37  kubectl describe pod frontend-78645bc589-5xf6h
+   38  kubectl get svc
