@@ -3,22 +3,19 @@ kind: ClusterConfig
 
 metadata:
   name: murali-test-cluster
-  region: eu-west-1
+  region: us-west-2
   version: "1.31"
-
-vpc:
-  useDefaultVPC: true
 
 nodeGroups:
   - name: murali-test-linux
     instanceType: t2.medium
-    desiredCapacity: 3
-    minSize: 3
+    desiredCapacity: 2
+    minSize: 2
     maxSize: 5
     amiFamily: AmazonLinux2
     ssh:
       allow: true
-      publicKeyName: your-keypair-name  # Replace with your actual key pair
+      publicKeyName: your-keypair-name  # Replace with actual EC2 key pair name
     tags:
       nodegroup-type: standard-workers
       environment: dev
