@@ -10,15 +10,13 @@ pipeline {
         REGION = "ap-south-1"
         REPO_URI = "${AWS_ACCOUNT_ID}.dkr.ecr.${REGION}.amazonaws.com/sre-training"
         DOCKER_IMAGE = "sre-training-cart:${VERSION}"
-        DOCKER_REGISTRY = 'docker.io'
-        DOCKER_REGISTRY_CREDENTIALS = 'docker-creds'
     }
 
     stages {
         stage('Clone') {
             steps {
                 echo '🔁 Cloning the GitHub repository...'
-                git url: 'https://github.com/Msocial123/fss-Retail-App_kubernetes.git', branch: 'master'
+                git url: 'https://github.com/Msocial123/Dimple-CapsuleProject.git', branch: 'master'
             }
         }
 
@@ -42,20 +40,6 @@ pipeline {
                 }
             }
         }
-
-        stage('Push to Docker Hub') {
-            steps {
-                withCredentials([usernamePassword(credentialsId: "${DOCKER_REGISTRY_CREDENTIALS}", passwordVariable: 'DOCKER_PASSWORD', usernameVariable: 'DOCKER_USERNAME')]) {
-                    echo "📤 Pushing Docker image to Docker Hub..."
-                    sh """
-                        docker login -u ${DOCKER_USERNAME} -p ${DOCKER_PASSWORD}
-                        docker tag ${DOCKER_IMAGE} muralisocial123/${DOCKER_IMAGE}
-                        docker push muralisocial123/${DOCKER_IMAGE}
-                    """
-                }
-            }
-        }
-
         stage('Run Docker Compose') {
             steps {
                 echo "🚀 Starting containers using Docker Compose..."
