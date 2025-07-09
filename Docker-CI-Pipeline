@@ -6,10 +6,10 @@ pipeline {
     }
 
     environment {
-        AWS_ACCOUNT_ID = "862848730563"
+        AWS_ACCOUNT_ID = "254422852849"
         REGION = "ap-south-1"
-        REPO_URI = "${AWS_ACCOUNT_ID}.dkr.ecr.${REGION}.amazonaws.com/sre-training"
-        DOCKER_IMAGE = "sre-training-cart:${VERSION}"
+        REPO_URI = "${AWS_ACCOUNT_ID}.dkr.ecr.${REGION}.amazonaws.com/devsecops"
+        DOCKER_IMAGE = "devsecops-training-cart:${VERSION}"
     }
 
     stages {
