@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        SONAR_TOKEN = credentials('Sonar_Tocken')
+        SONAR_TOKEN = credentials('Sonar_Tocken') # Update Your Credencials Name 
         SONAR_SCANNER_HOME = '/opt/sonar-scanner'
     }
 
@@ -16,7 +16,7 @@ pipeline {
 
         stage('SonarQube Analysis') {
             steps {
-                withSonarQubeEnv('SonarQube-Server') {
+                withSonarQubeEnv('SonarQube-Server') { #Update your SonarQube Server Name
                     sh """
                         ${SONAR_SCANNER_HOME}/bin/sonar-scanner \
                           -Dsonar.projectKey=maven-web-application \
