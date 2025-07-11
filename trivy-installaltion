@@ -34,3 +34,11 @@ export PATH=$PATH:/usr/local/bin
 
 echo 'export PATH=$PATH:/usr/local/bin' >> ~/.bashrc
 source ~/.bashrc
+-----
+
+Trivy Commands : 
+
+ trivy image --format table devsecops-image:v1.0
+  101  trivy image --format table --severity HIGH devsecops-image:v1.0
+  102  trivy image --format table --severity CRITICAL devsecops-image:v1.0
+  trivy image --format json --output trivy-report.json devsecops-image:v1.0
