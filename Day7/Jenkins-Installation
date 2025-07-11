@@ -1,0 +1,19 @@
+How to install Jenkins :
+https://www.jenkins.io/doc/tutorials/tutorial-for-installing-jenkins-on-AWS/
+
+https://www.jenkins.io/doc/book/pipeline/syntax/
+
+
+#####################################3
+Sonar-Scanner Installation :
+
+   41 wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-5.0.1.3006-linux.zip
+   42  unzip sonar-scanner-cli-5.0.1.3006-linux.zip
+   43  ls
+   44  sudo mv sonar-scanner-5.0.1.3006-linux /opt/sonar-scanner
+   45  sudo nano /etc/profile
+   46  source /etc/profile
+   47  sonar-scanner -v
+   48  cd /opt/sonar-scanner/
+
+   Install and Configure the project

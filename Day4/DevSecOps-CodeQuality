@@ -1,0 +1,57 @@
+pipeline {
+    agent any
+
+    environment {
+        SONAR_TOKEN = credentials('Sonar_Tocken') # Update Your Credencials Name 
+        SONAR_SCANNER_HOME = '/opt/sonar-scanner'
+    }
+
+    stages {
+        stage('Checkout Code') {
+            steps {
+                git branch: 'master',
+                    url: 'https://github.com/Msocial123/maven-web-application.git'
+            }
+        }
+
+        stage('SonarQube Analysis') {
+            steps {
+                withSonarQubeEnv('SonarQube-Server') { #Update your SonarQube Server Name
+                    sh """
+                        ${SONAR_SCANNER_HOME}/bin/sonar-scanner \
+                          -Dsonar.projectKey=maven-web-application \
+                          -Dsonar.sources=. \
+                          -Dsonar.host.url=$SONAR_HOST_URL \
+                          -Dsonar.login=$SONAR_TOKEN
+                    """
+                }
+            }
+        }
+
+        stage('Quality Gate') {
+            steps {
+                timeout(time: 2, unit: 'MINUTES') {
+                    waitForQualityGate abortPipeline: true
+                }
+            }
+        }
+    }
+
+    post {
+        success {
+            echo "✅ Build and SonarQube Analysis Passed Successfully."
+        }
+
+        unstable {
+            echo "⚠️ Build is unstable. Please review quality gate and test results."
+        }
+
+        failure {
+            echo "❌ Build failed. Check logs and SonarQube report."
+        }
+
+        always {
+            echo "🔍 Post-build actions completed."
+        }
+    }
+}

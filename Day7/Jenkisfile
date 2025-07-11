@@ -1,0 +1,38 @@
+pipeline{
+    agent any
+    paramenters
+    environment 
+    stages {
+        stage('Git Clone')
+        {
+            steps {
+                script """ Script"""
+            }
+        }
+        stage('Build DockerImage'){
+            steps {
+                sh 'docker build -t imagename location of the docker'
+            }
+        }
+        stage('Push the docker image inside the ECR Registry')
+        {
+            steps {
+
+            }
+        }
+        stage('Push to Docker Registry')
+        {
+            steps {
+                withCredencials(){
+                    Script 
+                }
+            }
+        }
+        stage('Deployment')
+        {
+            steps {
+                sh "docker-compose up -d "
+            }
+        }
+    }
+}
