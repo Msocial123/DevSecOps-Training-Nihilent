@@ -1,0 +1,56 @@
+pipeline {
+    agent any
+
+    environment {
+        // SonarQube configuration
+        SONARQUBE_SERVER = 'SonarQube-Server'              // Name of SonarQube server in Jenkins Global Config
+        SONAR_TOKEN = credentials('Sonar_Token')           // Jenkins Credential ID storing the token
+        SONAR_SCANNER_PATH = '/opt/sonar-scanner/bin/sonar-scanner'  // Absolute path to sonar-scanner
+        SONAR_PROJECT_KEY = 'Maven-Web-Application'        // Unique Sonar project key
+        SONAR_PROJECT_NAME = 'Maven-Web-Application'       // Project name as displayed in Sonar
+        SONAR_PROJECT_VERSION = '1.0.0'                    // Version number
+    }
+
+    stages {
+        stage('Checkout Code') {
+            steps {
+                echo 'Cloning the GitHub repository...'
+                git url: 'https://github.com/Msocial123/maven-web-application.git', branch: 'master'
+            }
+        }
+
+        stage('Code Quality Analysis') {
+            steps {
+                script {
+                    withSonarQubeEnv("${env.SONARQUBE_SERVER}") {
+                        sh """
+                            ${env.SONAR_SCANNER_PATH} \
+                            -Dsonar.projectKey=${env.SONAR_PROJECT_KEY} \
+                            -Dsonar.projectName=${env.SONAR_PROJECT_NAME} \
+                            -Dsonar.projectVersion=${env.SONAR_PROJECT_VERSION} \
+                            -Dsonar.sources=. \
+                            -Dsonar.login=${env.SONAR_TOKEN}
+                        """
+                    }
+                }
+            }
+        }
+
+        stage('Quality Gate') {
+            steps {
+                script {
+                    def qualityGate = waitForQualityGate()
+                    if (qualityGate.status != 'OK') {
+                        error "SonarQube Quality Gate failed! Code quality is not satisfactory."
+                    }
+                }
+            }
+        }
+    }
+
+    post {
+        always {
+            echo "Build complete."
+        }
+    }
+}

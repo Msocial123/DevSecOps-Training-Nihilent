@@ -1,0 +1,14 @@
+wget https://github.com/aquasecurity/trivy/releases/latest/download/trivy_0.50.4_Linux-64bit.rpm
+sudo rpm -ivh trivy_0.50.4_Linux-64bit.rpm
+
+___________
+
+sudo mv trivy /usr/local/bin/
+chmod +x /usr/local/bin/trivy
+
+
+stage('Security Scan') {
+    steps {
+        sh 'trivy image myapp:latest --exit-code 1 --severity HIGH,CRITICAL --format table'
+    }
+}
