@@ -8,3 +8,11 @@
    8 docker exec -it webserver /bin/bash
    9 docker ps
   10 histroy
+  11 history
+  12 clear
+  13 docker run -it --name Sample amazonlinux /bin/bash
+  14 docker ps
+  15 docker ps -a
+  16 docker run -td --name web-app -p 81:80 nginx
+  17 docker ps
+  18 docker port web-app
