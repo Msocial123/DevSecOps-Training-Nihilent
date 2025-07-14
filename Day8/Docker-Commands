@@ -1,0 +1,10 @@
+   1 docker create -it --name webserver ubuntu /bin/bash
+   2 docker ps
+   3 docker ps -a
+   4 docker images
+   5 docker start webserver
+   6 docker ps
+   7 docker exec -it --name webserver /bin/bash
+   8 docker exec -it webserver /bin/bash
+   9 docker ps
+  10 histroy
