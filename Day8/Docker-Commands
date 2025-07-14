@@ -15,4 +15,22 @@
   15 docker ps -a
   16 docker run -td --name web-app -p 81:80 nginx
   17 docker ps
-  18 docker port web-app
+  18 docker port web-
+  
+
+  ####333#################################
+
+  Deploying a web application in a ubuntu container 
+  docker run -td --name A1 -p 82:80 ubuntu /bin/bash
+   2  apt-get update -y
+    3  apt-get install apache2 -y
+    4  git clone https://github.com/Msocial123/Flipkart-Clone.git
+    5  apt-get install git -y
+    6  git clone https://github.com/Msocial123/Flipkart-Clone.git
+    7  ls
+    8  cd Flipkart-Clone/
+    9  ls
+   10  cp -r . /var/www/html
+   11  service apache2 status
+   12  service apache2 start
+   13  service apache2 status
