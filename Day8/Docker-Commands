@@ -32,4 +32,14 @@
    10  cp -r . /var/www/html
    11  service apache2 status
    12  service apache2 start
-   13  service apache2 status
+   13  service apache2 statu
+###################################################
+
+Building a Docker Project 
+
+docker build -t devsecops-cart:v1 .
+ 38 docker run -td --name cart-web -p 3001:3000 devsecops-cart:v1
+  39 docker login
+  40 docker images
+  41 docker tag devsecops-cart:v1 muralisocial123/devsecops-cart:v1
+  42 docker push muralisocial123/devsecops-cart:v1
