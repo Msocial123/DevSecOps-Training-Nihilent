@@ -1,0 +1,17 @@
+eksctl create cluster --name murali-test-cluster \
+  --version 1.31 \
+  --region us-west-2 \
+  --nodegroup-name murali-test-linux \
+  --node-type t2.medium \
+  --nodes 2 \
+  --nodes-min 2 \
+  --nodes-max 5 \
+  --managed
+
+--------------------------
+
+Delete :
+
+eksctl delete cluster --name murali-test-cluster --region us-west-2
+
+kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml - Metric Server 
