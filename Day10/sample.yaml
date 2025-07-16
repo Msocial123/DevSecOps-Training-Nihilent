@@ -1,0 +1,14 @@
+---
+- name: Setup Web Servers
+  hosts: webservers
+  become: yes
+  user: ansible 
+  connection: ssh 
+  tasks: 
+
+    - name: Install docker on WebServer 
+      action: yum pkg=docker state=present 
+
+    - name: Install httpd on Webservers 
+      action: yum pkg=httpd state=present  
+  
