@@ -1,0 +1,44 @@
+---
+- name: Setup Web Servers
+  hosts: webservers
+  user: ansible 
+  connection: ssh 
+  become: yes
+
+  tasks:
+    - name: Install Java (OpenJDK)
+      package:
+        name: java-11-openjdk
+        state: present
+
+    - name: Install MySQL
+      package:
+        name: mysql-server
+        state: present
+
+    - name: Install Python3
+      package:
+        name: python3
+        state: present
+
+    - name: Install Apache HTTPD
+      package:
+        name: httpd
+        state: present
+
+    - name: Start and enable httpd
+      service:
+        name: httpd
+        state: started
+        enabled: true
+
+    - name: Install Docker
+      package:
+        name: docker
+        state: present
+
+    - name: Start and enable Docker
+      service:
+        name: docker
+        state: started
+        enabled: true
