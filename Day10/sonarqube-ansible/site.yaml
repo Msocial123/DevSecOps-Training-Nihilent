@@ -1,0 +1,11 @@
+---
+- name: Provision SonarQube Server
+  hosts: webservers
+  user: ansible
+  become: yes
+  connection: ssh
+  roles:
+    - java
+    - postgresql
+    - sonarqube
+

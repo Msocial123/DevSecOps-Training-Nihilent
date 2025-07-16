@@ -1,0 +1,88 @@
+---
+- name: Install dependencies
+  dnf:
+    name:
+      - unzip
+      - wget
+    state: present
+
+- name: Create sonar user
+  user:
+    name: sonar
+    shell: /bin/bash
+    create_home: yes
+
+- name: Download SonarQube
+  get_url:
+    url: https://binaries.sonarsource.com/Distribution/sonarqube/sonarqube-10.4.1.88267.zip
+    dest: /opt/sonarqube.zip
+
+- name: Unzip SonarQube
+  unarchive:
+    src: /opt/sonarqube.zip
+    dest: /opt/
+    remote_src: yes
+
+- name: Rename extracted folder
+  command: mv /opt/sonarqube-10.4.1.88267 /opt/sonarqube
+  args:
+    creates: /opt/sonarqube/bin
+
+- name: Change ownership
+  file:
+    path: /opt/sonarqube
+    owner: sonar
+    group: sonar
+    recurse: yes
+
+- name: Configure SonarQube to use PostgreSQL
+  lineinfile:
+    path: /opt/sonarqube/conf/sonar.properties
+    regexp: '^#sonar.jdbc.url'
+    line: sonar.jdbc.url=jdbc:postgresql://localhost/sonarqube
+
+- name: Set DB username
+  lineinfile:
+    path: /opt/sonarqube/conf/sonar.properties
+    regexp: '^#sonar.jdbc.username'
+    line: sonar.jdbc.username=sonar
+
+- name: Set DB password
+  lineinfile:
+    path: /opt/sonarqube/conf/sonar.properties
+    regexp: '^#sonar.jdbc.password'
+    line: sonar.jdbc.password=sonar
+
+- name: Create systemd service
+  copy:
+    dest: /etc/systemd/system/sonarqube.service
+    content: |
+      [Unit]
+      Description=SonarQube service
+      After=syslog.target network.target
+
+      [Service]
+      Type=forking
+
+      ExecStart=/opt/sonarqube/bin/linux-x86-64/sonar.sh start
+      ExecStop=/opt/sonarqube/bin/linux-x86-64/sonar.sh stop
+
+      User=sonar
+      Group=sonar
+      Restart=always
+
+      LimitNOFILE=65536
+      LimitNPROC=4096
+
+      [Install]
+      WantedBy=multi-user.target
+
+- name: Reload systemd
+  systemd:
+    daemon_reload: yes
+
+- name: Enable and start SonarQube
+  systemd:
+    name: sonarqube
+    enabled: yes
+    state: started

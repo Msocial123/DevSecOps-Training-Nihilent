@@ -1,0 +1,6 @@
+---
+- name: Provision Jenkins Server
+  hosts: webservers
+  become: true
+  roles:
+    - jenkins

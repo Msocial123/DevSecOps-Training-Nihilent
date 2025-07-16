@@ -1,0 +1,27 @@
+---
+- name: Install PostgreSQL 15 server and client
+  dnf:
+    name:
+      - postgresql15
+      - postgresql15-server
+    state: present
+
+- name: Initialize PostgreSQL DB manually
+  become_user: postgres
+  command: /usr/bin/initdb -D /var/lib/pgsql/data
+  args:
+    creates: /var/lib/pgsql/data/PG_VERSION
+
+- name: Enable and start PostgreSQL service
+  systemd:
+    name: postgresql
+    state: started
+    enabled: yes
+
+- name: Create sonar user
+  become_user: postgres
+  shell: psql -tc "SELECT 1 FROM pg_roles WHERE rolname='sonar'" | grep -q 1 || psql -c "CREATE USER sonar WITH PASSWORD 'sonar';"
+
+- name: Create SonarQube database
+  become_user: postgres
+  shell: psql -tc "SELECT 1 FROM pg_database WHERE datname = 'sonarqube'" | grep -q 1 || psql -c "CREATE DATABASE sonarqube OWNER sonar;"
