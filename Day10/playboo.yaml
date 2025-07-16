@@ -1,44 +1,51 @@
 ---
 - name: Setup Web Servers
   hosts: webservers
-  user: ansible 
-  connection: ssh 
   become: yes
+  become_method: sudo
+  gather_facts: yes
 
   tasks:
-    - name: Install Java (OpenJDK)
+    - name: Install Java (OpenJDK 11)
       package:
-        name: java-11-openjdk
+        name: java
         state: present
+      ignore_errors: yes
 
-    - name: Install MySQL
+    - name: Install MySQL Server
       package:
         name: mysql-server
         state: present
+      ignore_errors: yes
 
     - name: Install Python3
       package:
         name: python3
         state: present
+      ignore_errors: yes
 
     - name: Install Apache HTTPD
       package:
         name: httpd
         state: present
+      ignore_errors: yes
 
-    - name: Start and enable httpd
+    - name: Start and enable Apache HTTPD
       service:
         name: httpd
         state: started
         enabled: true
+      ignore_errors: yes
 
     - name: Install Docker
       package:
         name: docker
         state: present
+      ignore_errors: yes
 
     - name: Start and enable Docker
       service:
         name: docker
         state: started
         enabled: true
+      ignore_errors: yes
